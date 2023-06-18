@@ -33,8 +33,20 @@ class youtube:
                 continue
 
     def search(self):
-        print("hola")
+        json_data =json.loads(self.data)
+        data = json_data['contents']['twoColumnSearchResultsRenderer']['primaryContents']['sectionListRenderer']['contents'][0]['itemSectionRenderer']['contents']
+        #print(json.dumps(data, indent=2))
+        for i in data:
+            try:
+                print(i['videoRenderer']['title']['runs'][0]['text']) #Titulo
+                print(i['videoRenderer']['thumbnail']['thumbnails'][0]['url']) #thumbnail
+                duracion = i['richItemRenderer']['content']['videoRenderer']['lengthText']['simpleText']
+                enlace = i['richItemRenderer']['content']['videoRenderer']['navigationEndpoint']['commandMetadata']['webCommandMetadata']['url']
+                print(duracion,enlace)
+            except:
+                print("LALALL")
 
 
-yt = youtube("https://www.youtube.com/@gerbertjohnson/videos")
-yt.get_channel_main()
+
+yt = youtube("https://www.youtube.com/results?search_query=pissy+pamper")
+yt.search()
