@@ -27,8 +27,8 @@ body::-webkit-scrollbar-thumb {
 }
 
 main {
-  margin-left: 10rem;
-  padding: 1rem;
+  margin-left: 5rem;
+  padding:0;
 }
 
 .navbar {

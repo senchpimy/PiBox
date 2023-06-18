@@ -48,8 +48,8 @@ const c = {
 </div>
 <div class="videos_container">
 {#each Object.entries(data) as [title, conte]}
-<a class="video" href="#">
-    <div>
+<button class="video">
+    <div class="video_container">
       <img class="video_prev" src="{conte.img}">
     </div>
     <div class="duracion">
@@ -58,7 +58,7 @@ const c = {
     <div class="descripcion">
       <p>{title}</p>
     </div>
-</a>
+</button>
 {/each}
   
 </div>
