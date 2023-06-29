@@ -1,4 +1,13 @@
 <script>
+   import { invoke } from '@tauri-apps/api/tauri'
+
+  let name = 'Juanito'
+  let greetMsg = ''
+
+  async function greet() {
+     window.alert("Holaaaaa");
+    greetMsg = await invoke('greet', { name })
+  }
 const data = {
 "Video1" : {"Duracion":23,"img":"img.png", "url": "hhhhhhh"},
 "Video2" : {"Duracion":23,"img":"img.png", "url": "hhhhhhh"},
@@ -36,9 +45,8 @@ const c = {
 </script>
 
 <link rel='stylesheet' href='/canal.css'>
-<div class="fondo">
-</div>
-
+<div class="fondo"></div>
+  <button on:click="{greet}">Greet</button>
 <div class="info">
   <img class="avatar" src="{c.avatar}" alt="">
   <div class="info_container">

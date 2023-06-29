@@ -9,8 +9,7 @@
     <ul class="navbar-nav">
       <li class="logo">
         <button id="nav_button" class="main_button">
-	<img class="icono" src="img.png" alt="Menu">
-          <span class="link-text logo-text">Fireship</span>
+	        <img class="icono" src="img.png" alt="Menu">
         </button>
       </li>
 
