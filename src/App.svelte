@@ -10,6 +10,6 @@
 <body>
 	<Nav/>
 	<main>
-    <Main/>
+    <Canal/>
 	</main>
 </body>

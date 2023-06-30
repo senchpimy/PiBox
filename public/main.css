@@ -1,0 +1,6 @@
+container {
+  padding: 2vw;
+}
+container>h1 {
+  color: white;
+}

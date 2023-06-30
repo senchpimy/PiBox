@@ -5,9 +5,9 @@
   let greetMsg = ''
 
   async function greet() {
-     window.alert("Holaaaaa");
     greetMsg = await invoke('greet', { name })
   }
+   greet()
 const data = {
 "Video1" : {"Duracion":23,"img":"img.png", "url": "hhhhhhh"},
 "Video2" : {"Duracion":23,"img":"img.png", "url": "hhhhhhh"},
