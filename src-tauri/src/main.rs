@@ -1,6 +1,8 @@
 use std::fs;
+use pyo3::prelude::*;
+use pyo3::types::PyTuple;
 use serde::{Deserialize, Serialize};
-use serde_json::Result;
+//use serde_json::Result;
 
 
 #[tauri::command]
@@ -21,19 +23,47 @@ struct Site{
     svg:String,
 }
 
+#[derive(Serialize, Deserialize,Default)]
+struct Sites{
+    sites:Vec<Site>,
+}
+
 #[tauri::command]
-fn get_sites(name:&str)->String{
-    let site = Site {
-        file:"TEST".to_string(),
-        name:"NAME".to_string(),
-        svg:"SVG".to_string()
-    };
-    println!("Hola");
-    let paths = fs::read_dir("./").unwrap();
+fn get_sites()->String{
+    let paths = fs::read_dir("../sites/").unwrap();
+    let mut sites = Sites::default(); 
+    pyo3::prepare_freethreaded_python();
     for p in paths{
-        print!("Name:{};",p.unwrap().path().display());
+        //let mut  name:&str;
+        let pp = p.unwrap();
+        let p = pp.path().clone();
+        println!("Name:{};",p.display());
+        let contents = fs::read_to_string(pp.path())
+            .expect("Should have been able to read the file");
+        println!("{}",contents);
+        let name:String = Python::with_gil(|py| {
+             let fun: Py<PyAny> = PyModule::from_code(
+                 py,
+                &contents,
+                 "",
+                 "",
+             ).unwrap()
+             .getattr("name").unwrap()
+             .into();
+
+            let result = fun.call0(py).unwrap();
+            let e=result.extract::<&str>(py).unwrap();
+            e.to_string()
+        });
+        let s = Site{
+            file:"AÑAÑAÑ".to_string(),
+            name:pp.path().clone().to_str().unwrap().to_string(),
+            svg:name
+        };
+        sites.sites.push(s);
     }
-    let j = serde_json::to_string(&site).unwrap();
+    let j = serde_json::to_string(&sites).unwrap();
+    println!("{}",j);
     j
 }
 
