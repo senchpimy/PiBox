@@ -11,11 +11,8 @@
   }
   get()
 
-  const sections = {
-		"Title 1": "paragraph",
-		"Title 3": "paragraph",
-	}
   const navButton = document.getElementById('nav-button');
+
 </script>
   <style>
   #debug{
@@ -33,9 +30,9 @@
 	      <li class="nav-item">
 	        <a href="#" class="nav-link">
 			    <div class="icono">
-            {site.svg}
+            {@html site.svg}
           </div>
-		<span class="link-text">{site.name}</span>
+		<span class="link-text" id = {site.file}>{site.name}</span>
 	        </a>
 	      </li>
 	{/each}

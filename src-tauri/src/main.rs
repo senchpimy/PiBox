@@ -41,24 +41,28 @@ fn get_sites()->String{
         let contents = fs::read_to_string(pp.path())
             .expect("Should have been able to read the file");
         println!("{}",contents);
-        let name:String = Python::with_gil(|py| {
-             let fun: Py<PyAny> = PyModule::from_code(
+        let (name,svg) = Python::with_gil(|py| {
+             let fun = PyModule::from_code(
                  py,
                 &contents,
                  "",
                  "",
-             ).unwrap()
-             .getattr("name").unwrap()
-             .into();
+             ).unwrap();
+             //.getattr("name").unwrap()
+             //.into();
 
-            let result = fun.call0(py).unwrap();
-            let e=result.extract::<&str>(py).unwrap();
-            e.to_string()
+            //let name_result = fun.getattr("name").unwrap().into().call0(py).unwrap();
+            let name_result = fun.getattr("name").unwrap().call0().unwrap();
+            //let svg_result = fun.getattr("svg").unwrap().into().call0(py).unwrap();
+            let svg_result = fun.getattr("svg").unwrap().call0().unwrap();
+            let name=name_result.extract::<&str>().unwrap();
+            let svg=svg_result.extract::<&str>().unwrap();
+            (name.to_string(),svg.to_string())
         });
         let s = Site{
-            file:"AÑAÑAÑ".to_string(),
-            name:pp.path().clone().to_str().unwrap().to_string(),
-            svg:name
+            file:pp.path().clone().to_str().unwrap().to_string(),
+            name,
+            svg
         };
         sites.sites.push(s);
     }
